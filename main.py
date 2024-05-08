@@ -6,8 +6,16 @@ def run(old_file:str, new_file:str):
     departed_employee_ids:set = set()
     new_employee_ids:set = set()
     departed_employee_ids, new_employee_ids = get_diffs(old_data, new_data)
-    print("Departed Employees: ", get_net_ids(departed_employee_ids, old_data))
-    print("New Employees: ", get_net_ids(new_employee_ids, new_data))
+    employees_to_delete = get_employee_data(departed_employee_ids, old_data)
+    employees_to_add = get_employee_data(new_employee_ids, new_data)
+    print("Departed Employees: ")
+    for employee in employees_to_delete:
+        print_employee_info(employee)
+        print("\n")
+    print("New Employees: ")
+    for employee in employees_to_add:
+        print_employee_info(employee)
+        print("\n")
 
 
 def get_diffs(old_data, new_data):
@@ -19,13 +27,19 @@ def get_diffs(old_data, new_data):
     new_employee_ids:set = new_ids - old_ids
     return departed_employee_ids, new_employee_ids
 
-def get_net_ids(id_nums:set, data:pd.DataFrame):
-    net_ids:set = set()
+def get_employee_data(id_nums:set, data:pd.DataFrame):
+    employee_data:list = []
+    complete_data = {}
     for index, employee in data.iterrows():
         if employee['Empl ID'] in id_nums:
-            net_ids.add(employee['Net ID'])
+            employee_data.append(employee)
 
-    return net_ids
+    return employee_data
+
+def print_employee_info(employee):
+    print("Empl ID: ", employee["Empl ID"])
+    print("Net ID: ", employee["Net ID"])
+    print("Name: ", employee["First Name"], employee["Last Name"])
     
 
 
