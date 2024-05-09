@@ -19,7 +19,7 @@ class TeamsManager:
         #remove all lines that start with "Profile picture"
         for phrase in remove_list:
             teams = [team for team in teams if not team.startswith(phrase)]
-
+ 
         #write file
         with open(self.teams_file, 'w') as file:
             for team in teams:
