@@ -1,9 +1,13 @@
 import pandas as pd
 from teams import TeamsManager
 from ADChecker import ADChecker
+import argparse
+import time
 
 class EmployeeManager:
     def run(self, old_file:str, new_file:str):
+        #save start time
+        start_time = time.time()
         old_data:pd.DataFrame = pd.read_excel(old_file)
         new_data:pd.DataFrame = pd.read_excel(new_file)
         departed_employee_ids:set = set()
@@ -12,6 +16,7 @@ class EmployeeManager:
         self.employees_to_delete = self.get_employee_data(departed_employee_ids, old_data)
         self.employees_to_add = self.get_employee_data(new_employee_ids, new_data)
         teams_manager = TeamsManager()
+        teams_manager.clean_teams()
         teams = teams_manager.get_names()
         not_found_departed, check_man_departed, to_delete = self.check_if_in_teams(self.employees_to_delete, teams)
         not_found_new, check_man_new, in_teams = self.check_if_in_teams(self.employees_to_add, teams)
@@ -44,6 +49,8 @@ class EmployeeManager:
         #make file
 
         with open("TeamsUpdates.txt", "w") as file:
+            file.write("Teams Updates\n")
+            file.write("Date: " + time.strftime("%m/%d/%Y") + "\n\n")
             file.write("Departed Employees:\n")
             file.write("Confirmed to Delete (No longer in Active Directory):\n")
             for employee in confirmed_to_delete:
@@ -60,7 +67,7 @@ class EmployeeManager:
             file.write("\n\n\n")
 
 
-            file.write("New Employees\n")
+            file.write("New Employees:\n")
             file.write("Confirmed to Add (Active Directory Verification Passed):\n")
             for employee in confirmed_to_add:
                 file.write(employee["First Name"] + " " + employee["Last Name"] + " (Net ID: " + employee['Net ID'] + ")\n")
@@ -73,6 +80,8 @@ class EmployeeManager:
             file.write("\nAlready in Teams:\n")
             for employee in in_teams:
                 file.write(employee["First Name"] + " " + employee["Last Name"] + " (Net ID: " + employee['Net ID'] + ")\n")
+            file.write("\n\n\n")
+            file.write("Done in: " + str(time.time() - start_time) + " seconds")
 
 
 
@@ -117,6 +126,10 @@ class EmployeeManager:
         print("Net ID: ", employee["Net ID"])
         print("Name: ", employee["First Name"], employee["Last Name"])
     
+parser = argparse.ArgumentParser(description="Employee Manager")
+parser.add_argument("old_file", help="The old employee file")
+parser.add_argument("new_file", help="The new employee file")
+args = parser.parse_args()
 
 employee_manager = EmployeeManager()
-employee_manager.run("Copy of Employee Report 3-5-24.xlsx", "Employee List 5-1-2024.xls")
+employee_manager.run(args.old_file, args.new_file)
