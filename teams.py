@@ -1,8 +1,9 @@
 class TeamsManager:
     def __init__(self):
         self.teams = []
+        self.teams_file = 'teams.txt'
 
-    def clean_teams(self, teams_file):
+    def clean_teams(self):
         remove_list = ["Profile picture", "Owner", "Member", "Name", "Title", "Location", "Tags", "Role", "("]
         with open('jobs.txt', 'r') as job_file:
             jobs = job_file.readlines()
@@ -11,7 +12,7 @@ class TeamsManager:
         for i in range(10):
             remove_list.append(str(i))
         #open teams file
-        with open(teams_file, 'r') as file:
+        with open(self.teams_file, 'r') as file:
             teams = file.readlines()
         #remove new line characters
         teams = [team.strip() for team in teams]
@@ -20,16 +21,14 @@ class TeamsManager:
             teams = [team for team in teams if not team.startswith(phrase)]
 
         #write file
-        with open(teams_file, 'w') as file:
+        with open(self.teams_file, 'w') as file:
             for team in teams:
-                file.write(team)
+                if team.strip() != '' and team.strip() != ' ':
+                    file.write(team + '\n')
+
+    def get_names(self):
+        with open(self.teams_file, 'r') as file:
+            teams = file.readlines()
+        return [team.strip() for team in teams]
         
-        with open(teams_file, 'r') as file:
-            with open('cleaned_teams.txt', 'w') as cleaned_file:
-                for line in file:
-                    if line.strip():
-                        cleaned_file.write(line)
-                        cleaned_file.write("\n")
-    
-teams_manager = TeamsManager()
-teams_manager.clean_teams('teams.txt')
+  
