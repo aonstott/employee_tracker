@@ -33,11 +33,13 @@ git clone https://github.com/aonstott/employee_tracker
 # Setup
 In file explorer, find the employee_tracker folder that should have been created by running the previous command.  Put the excel files for last months employees and this months employees into this folder.  Next, create a new file called "teams.txt" in the same folder.
 
-(note: this next part is a little janky but it works.  I couldn't get access to the Teams API because I don't have the admin permissions required.  If you know how to program in python and want to try to get API access for Microsoft Graphs API, you could make this part a lot better.)
+
+I found a new way to get names from teams.  It's much easier; only a few commands from the terminal are needed.  
+<s>(note: this next part is a little janky but it works.  I couldn't get access to the Teams API because I don't have the admin permissions required.  If you know how to program in python and want to try to get API access for Microsoft Graphs API, you could make this part a lot better.)
 
 Next, you need to go to the Production Services Team, click the 3 dots in the corner, and select manage team.  From here, highlight all the information for the members as shown in the picture attached to this article.  Paste it into the teams.txt file you created.  It will look weird, but I have set it up to automatically filter the data into a usable form. 
 
-![teamsimg](<Screenshot 2024-05-09 140410.png>)
+![teamsimg](<Screenshot 2024-05-09 140410.png>)</s>
 
 # Run the Program
 To run the program, open a terminal and navigate to the employee_manager folder.  Run the following command:
