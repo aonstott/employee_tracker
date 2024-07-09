@@ -1,6 +1,13 @@
 # Employee Tracker
 This program is designed to help automate the process of adding and removing employees from teams.  The following instructions are also on knowledge base in GLPI:
 
+# Categories Explanation:
+<b>Confirmed to Delete:</b> The program found these employees exact names in teams, and it confirmed that they have been removed from active directory.  They should be safe to remove from MS teams.
+
+<b>Unconfirmed to Delete:</b> These employees' names were found in teams, but they still have a company listed in active directory.  The program only checks for any company, not neccessarily print and mail.  This is because the company listed is usually a more specific subdivision, and adding every single one would be difficult.  Manually check AD to confirm the employee isn't listed as a PM employee.
+
+
+
 # Intro
 As of May 2024, I (Aaron) am managing adding and removing employees from Microsoft Teams when they enter or leave the department.  I have created some tools to make the process easier, so hopefully whoever takes this responsibility over next has everything set up to do it efficiently.  
 

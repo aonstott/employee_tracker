@@ -4,3 +4,4 @@
 *.txt
 !jobs.txt
 /__pycache__/
+*.csv

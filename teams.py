@@ -1,3 +1,5 @@
+import pandas as pd
+
 class TeamsManager:
     def __init__(self):
         self.teams = []
@@ -25,6 +27,13 @@ class TeamsManager:
             for team in teams:
                 if team.strip() != '' and team.strip() != ' ':
                     file.write(team + '\n')
+    
+    def get_names_from_csv(self):
+        df = pd.read_csv('teams_members.csv')
+        df = df.dropna()
+        with open(self.teams_file, 'w') as file:
+            for index, row in df.iterrows():
+                file.write(row['Name'] + '\n')
 
     def get_names(self):
         with open(self.teams_file, 'r') as file:

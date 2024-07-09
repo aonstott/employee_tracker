@@ -12,12 +12,20 @@ class EmployeeManager:
         new_data:pd.DataFrame = pd.read_excel(new_file)
         departed_employee_ids:set = set()
         new_employee_ids:set = set()
+
+        #get employees that appear in one file but not the other
         departed_employee_ids, new_employee_ids = self.get_diffs(old_data, new_data)
+
+        #Use the ids to get all employee data for the employees we need to add/remove
         self.employees_to_delete = self.get_employee_data(departed_employee_ids, old_data)
         self.employees_to_add = self.get_employee_data(new_employee_ids, new_data)
+
         teams_manager = TeamsManager()
-        teams_manager.clean_teams()
+        #Use our csv file to get the names of employees in teams
+        teams_manager.get_names_from_csv()
         teams = teams_manager.get_names()
+
+        #Check if the employees we need to add/remove are in teams
         not_found_departed, check_man_departed, to_delete = self.check_if_in_teams(self.employees_to_delete, teams)
         not_found_new, check_man_new, in_teams = self.check_if_in_teams(self.employees_to_add, teams)
 
@@ -33,16 +41,23 @@ class EmployeeManager:
             result = ad_checker.check(employee["Net ID"])
             company = ad_checker.get_company(result)
             if not(ad_checker.company_exists(company)):
+                #Employee is no longer in active directory, safe to delete
                 confirmed_to_delete.append(employee)
             else:
+                #Employee still has company lsited in active directory
+                #Not necessarily our company, could be at a different department in BYU
+                #Check manually if employee should be deleted
                 unconfirmed_to_delete.append(employee)
         
         for employee in not_found_new:
             result = ad_checker.check(employee["Net ID"])
             company = ad_checker.get_company(result)
             if ad_checker.company_exists(company):
+                #Employee is in active directory, safe to add
                 confirmed_to_add.append(employee)
             else:
+                #Employee is not in active directory
+                #Might not have been added yet, check manually
                 uncomfirmed_to_add.append(employee)
 
 
@@ -114,8 +129,10 @@ class EmployeeManager:
             if str(employee["First Name"]) + " " + str(employee["Last Name"]) in teams_names:
                 to_change.append(employee)
             elif (str(employee["Last Name"]) in teams_last_names):
+                #we found didn't find the full name in teams but we found the last name, so we need to check manually
                 check_manually.append(employee)
             else:
+                #didn't find last name anywhere in teams
                 not_found.append(employee)
         
         return not_found, check_manually, to_change
