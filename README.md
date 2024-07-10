@@ -2,11 +2,20 @@
 This program is designed to help automate the process of adding and removing employees from teams.  The following instructions are also on knowledge base in GLPI:
 
 # Categories Explanation:
-<em> This is an explanation of the categories in the output "TeamsUpdates.txt" file.  If you haven't yet installed or used the program skip to intro section.  This part is at the top because I am guessing it will be used a lot for reference. </em>
+<em> This is an explanation of the categories in the output "TeamsUpdates.txt" file.  If you haven't yet installed or used the program skip to intro section.  This part is at the top because I am guessing it will be used a lot for reference. <br>
+Note: I am considering changing the program to check emails instead of names in Teams, in which case these will change.</em>
 <br><br>
-<b>Confirmed to Delete:</b> The program found these employees exact names in teams, and it confirmed that they have been removed from active directory.  They should be safe to remove from MS teams.
+<b>Confirmed to Delete:</b> The program found these employees' exact names in teams, and it confirmed that they have been removed from active directory.  They should be safe to remove from MS teams.
 
 <b>Unconfirmed to Delete:</b> These employees' names were found in teams, but they still have a company listed in active directory.  The program only checks for any company, not neccessarily print and mail.  This is because the company listed is usually a more specific subdivision, and adding every single one would be difficult.  Manually check AD to confirm the employee isn't listed as a PM employee.
+
+<b>Check manually to determine removal:</b> The program did not find these employees' exact names in Teams, but found their last name.  This could mean they are using a nickname in Teams, or that they are not in teams but there is someone else with the same last name.  Check teams manually using netid, and if the departed employee is still in teams, delete them.
+
+<b>Confirmed to Add:</b> The program did not find these employees' names in teams, and it confirmed that they have been added to active directory.  They should be safe to add to MS teams.
+
+<b>Unconfirmed to Add:</b> These employees' names were not found in teams, but they do not have a company listed in active directory.  It's possible they just haven't been added to the AD group yet and will be later.  Check these ones against the spreadsheet just to be sure.
+
+<b>Check manually to determine Addition:</b> The program found these employees' last names in teams, but not an exact match.  This could be because the new employee is in teams but is using a nickname, or they are not in Teams but someone else has the same last name.  Check Teams manually, and if the new employee is not in Teams add them. 
 
 
 
