@@ -1,6 +1,7 @@
 # Employee Tracker
 This program is designed to help automate the process of adding and removing employees from teams.  The following instructions are also on knowledge base in GLPI:
 
+
 # Categories Explanation:
 <em> This is an explanation of the categories in the output "TeamsUpdates.txt" file.  If you haven't yet installed or used the program skip to intro section.  This part is at the top because I am guessing it will be used a lot for reference. <br>
 Note: I am considering changing the program to check emails instead of names in Teams, in which case these will change.</em>

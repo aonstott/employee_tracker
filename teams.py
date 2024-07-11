@@ -5,6 +5,7 @@ class TeamsManager:
         self.teams = []
         self.teams_file = 'teams.txt'
 
+    #This isn't necessary unless you want to go back to the old way of getting teams
     def clean_teams(self):
         remove_list = ["Profile picture", "Owner", "Member", "Name", "Title", "Location", "Tags", "Role", "("]
         with open('jobs.txt', 'r') as job_file:
@@ -28,16 +29,23 @@ class TeamsManager:
                 if team.strip() != '' and team.strip() != ' ':
                     file.write(team + '\n')
     
+    #This is the new method for getting users from the teams file
     def get_names_from_csv(self):
         df = pd.read_csv('teams_members.csv')
         df = df.dropna()
         with open(self.teams_file, 'w') as file:
             for index, row in df.iterrows():
-                file.write(row['Name'] + '\n')
+                netid = row['User'].split('@')[0]
+                file.write(netid + '\n')
 
     def get_names(self):
         with open(self.teams_file, 'r') as file:
             teams = file.readlines()
         return [team.strip() for team in teams]
+    
+
+
+
+
         
   
