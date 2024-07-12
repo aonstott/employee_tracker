@@ -3,8 +3,7 @@ This program is designed to help automate the process of adding and removing emp
 
 
 # Categories Explanation:
-<em> This is an explanation of the categories in the output "TeamsUpdates.txt" file.  If you haven't yet installed or used the program skip to intro section.  This part is at the top because I am guessing it will be used a lot for reference. <br>
-Note: I am considering changing the program to check emails instead of names in Teams, in which case these will change.</em>
+<em> This is an explanation of the categories in the output "TeamsUpdates.txt" file.  If you haven't yet installed or used the program skip to intro section.  This part is at the top because I am guessing it will be used a lot for reference.</em>
 <br><br>
 <b>Confirmed to Delete:</b> The program found these employees' exact names in teams, and it confirmed that they have been removed from active directory.  They should be safe to remove from MS teams.
 
@@ -99,5 +98,8 @@ To run the program, open a terminal and navigate to the employee_manager folder.
 
 python3 ./main.py "old_file" "new_file"
 
-replace old_file and new_file with the names of the excel files, making sure to keep them in double quotes.  This command should generate a file named TeamsUpdates.txt that will tell you who to add and remove from teams.  
+replace old_file and new_file with the names of the excel files, making sure to keep them in double quotes.  This command should generate a file named TeamsUpdates.txt that will tell you who to add and remove from Teams.  
+
+# Checking if Employees Were Added and Removed Correctly
+After you have run the program and made all the updates suggested by TeamsUpdates.txt, run the command to create the CSV file from step 6 again.  This will create a file with the updated members of Teams.  Make sure the CSV file in the employee_tracker directory is the new one, and run the program again.  The TeamsUpdates.txt file should now indicate that all of the departed employees have not been found in Teams, and that the new employees are already in Teams.
 
